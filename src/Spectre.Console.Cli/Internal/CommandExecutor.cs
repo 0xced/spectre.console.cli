@@ -109,14 +109,6 @@ internal sealed class CommandExecutor
                 return leaf.ShowHelp ? 0 : 1;
             }
 
-            // Is this the default and is it called without arguments when there are required arguments?
-            if (leaf.Command.IsDefaultCommand && arguments.Count == 0 && leaf.Command.Parameters.Any(p => p.IsRequired))
-            {
-                // Display help for default command.
-                configuration.Settings.Console.SafeRender(helpProvider.Write(model, leaf.Command));
-                return 1;
-            }
-
             // Create the content.
             var context = new CommandContext(
                 arguments,
