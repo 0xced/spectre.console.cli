@@ -1,4 +1,5 @@
-﻿[yellow]DESCRIPTION:[/]
+﻿Error: Missing required argument 'TEETH'.
+[yellow]DESCRIPTION:[/]
 The lion command
 
 [yellow]USAGE:[/]

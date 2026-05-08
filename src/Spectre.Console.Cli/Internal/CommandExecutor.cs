@@ -117,7 +117,7 @@ internal sealed class CommandExecutor
                 leaf.Command.Data);
 
             // Execute the command tree.
-            return await ExecuteAsync(leaf, parsedResult.Tree, context, resolver, configuration, cancellationToken).ConfigureAwait(false);
+            return await ExecuteAsync(helpProvider, model, leaf, parsedResult.Tree, context, resolver, configuration, cancellationToken).ConfigureAwait(false);
         }
     }
 
@@ -212,6 +212,8 @@ internal sealed class CommandExecutor
     }
 
     private static async Task<int> ExecuteAsync(
+        IHelpProvider helpProvider,
+        CommandModel model,
         CommandTree leaf,
         CommandTree tree,
         CommandContext context,
@@ -257,6 +259,10 @@ internal sealed class CommandExecutor
         catch (Exception ex) when (configuration.Settings is { ExceptionHandler: not null, PropagateExceptions: false })
         {
             return configuration.Settings.ExceptionHandler(ex, resolver);
+        }
+        catch (CommandRuntimeException ex)
+        {
+            throw new CommandRuntimeException(ex, helpProvider.Write(model, leaf.Command));
         }
     }
 }

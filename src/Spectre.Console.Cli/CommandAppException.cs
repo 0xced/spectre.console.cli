@@ -18,7 +18,7 @@ public abstract class CommandAppException : Exception
         Pretty = pretty;
     }
 
-    internal CommandAppException(string message, Exception ex, IRenderable? pretty = null)
+    internal CommandAppException(string message, Exception? ex, IRenderable? pretty = null)
         : base(message, ex)
     {
         Pretty = pretty;

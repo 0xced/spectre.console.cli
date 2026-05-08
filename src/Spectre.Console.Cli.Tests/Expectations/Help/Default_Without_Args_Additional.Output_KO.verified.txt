@@ -1,4 +1,5 @@
-﻿설명:
+﻿Error: Missing required argument 'TEETH'.
+설명:
 The lion command
 
 사용법:

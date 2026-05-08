@@ -557,12 +557,14 @@ public sealed partial class CommandAppTests
             [InlineData("--f-o-o")]
             [InlineData("--f_oo")]
             [InlineData("--f_o_o")]
-            public void Should_Allow_Special_Symbols_In_Name(string option)
+            [Expectation("Test_2")]
+            public Task Should_Allow_Special_Symbols_In_Name(string option)
             {
                 // Given
                 var app = new CommandAppTester();
                 app.Configure(configurator =>
                 {
+                    configurator.SetApplicationName("myapp");
                     configurator.AddCommand<DogCommand>("dog");
                 });
 
@@ -570,7 +572,9 @@ public sealed partial class CommandAppTests
                 var result = app.Run("dog", option);
 
                 // Then
-                result.Output.ShouldBe("Error: Command 'dog' is missing required argument 'AGE'.");
+                var settings = new VerifySettings();
+                settings.DisableRequireUniquePrefix();
+                return Verifier.Verify(result.Output, settings);
             }
         }
 

@@ -2,6 +2,7 @@ namespace Spectre.Console.Tests.Unit.Cli;
 
 public sealed partial class CommandAppTests
 {
+    [ExpectationPath("Pairs")]
     public sealed class Pairs
     {
         public sealed class AmbiguousSettings : CommandSettings
@@ -186,14 +187,18 @@ public sealed partial class CommandAppTests
         }
 
         [Theory]
-        [InlineData("foo=1=2", "Error: The value 'foo=1=2' is not in a correct format")]
-        [InlineData("foo=1=2=3", "Error: The value 'foo=1=2=3' is not in a correct format")]
-        public void Should_Throw_If_Value_Is_Not_In_A_Valid_Format_Using_Default_Deconstructor(
-            string input, string expected)
+        [InlineData("foo=1=2")]
+        [InlineData("foo=1=2=3")]
+        [Expectation("Test_1")]
+        public Task Should_Throw_If_Value_Is_Not_In_A_Valid_Format_Using_Default_Deconstructor(string input)
         {
             // Given
-            var app = new CommandAppTester { TestSettings = { TrimConsoleOutput = false } };
+            var app = new CommandAppTester();
             app.SetDefaultCommand<GenericCommand<DefaultPairDeconstructorSettings>>();
+            app.Configure(configurator =>
+            {
+                configurator.SetApplicationName("myapp");
+            });
 
             // When
             var result = app.Run(new[]
@@ -203,7 +208,7 @@ public sealed partial class CommandAppTests
 
             // Then
             result.ExitCode.ShouldBe(-1);
-            result.Output.ShouldBe(expected + Environment.NewLine);
+            return Verifier.Verify(result.Output).UseParameters(input);
         }
 
         [Fact]

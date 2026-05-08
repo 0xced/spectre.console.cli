@@ -1,0 +1,7 @@
+﻿Error: The value 'foo=1=2' is not in a correct format
+USAGE:
+    myapp [OPTIONS]
+
+OPTIONS:
+    -h, --help           Prints help information
+        --var <VALUE>

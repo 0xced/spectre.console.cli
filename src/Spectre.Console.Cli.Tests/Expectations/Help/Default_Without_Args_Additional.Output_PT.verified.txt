@@ -1,4 +1,5 @@
-﻿DESCRIÇÃO:
+﻿Error: Missing required argument 'TEETH'.
+DESCRIÇÃO:
 The lion command
 
 USO:

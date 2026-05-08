@@ -15,6 +15,14 @@ public class CommandRuntimeException : CommandAppException
     {
     }
 
+    internal CommandRuntimeException(CommandRuntimeException exception, IEnumerable<IRenderable> help)
+        : base(exception.Message, exception.InnerException, exception.Pretty)
+    {
+        Help = help;
+    }
+
+    internal IEnumerable<IRenderable>? Help { get; }
+
     internal static CommandRuntimeException CouldNotResolveType(Type type, Exception? ex = null)
     {
         var message = $"Could not resolve type '{type.FullName}'.";

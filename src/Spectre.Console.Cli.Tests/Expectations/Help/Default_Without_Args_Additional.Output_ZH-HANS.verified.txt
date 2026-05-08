@@ -1,4 +1,5 @@
-﻿描述:
+﻿Error: Missing required argument 'TEETH'.
+描述:
 The lion command
 
 用法:

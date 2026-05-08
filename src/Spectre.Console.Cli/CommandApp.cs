@@ -108,6 +108,11 @@ public sealed class CommandApp : ICommandApp
                 _configurator.Settings.Console.SafeRender(pretty);
             }
 
+            if (ex is CommandRuntimeException { Help: not null } runtimeEx)
+            {
+                _configurator.Settings.Console.SafeRender(runtimeEx.Help);
+            }
+
             return -1;
         }
     }
